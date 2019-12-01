@@ -34,6 +34,16 @@ public class Game {
 		this.round = rou;
 	}
 
+	public void endgameMurder(Player pKill, Player pDead, Board board) {
+		System.out.println(pKill.getName() + " has won by murdering their opponent! FIRST BLOOD!");
+		String[][]arr = board.getStringRepresentation(pKill, pDead);	
+		for (int i = 0; i < board.getN(); i++) {
+			for (int j = 0; j < board.getM(); j++)
+				System.out.print(arr[i][j] + " ");
+			System.out.print("\n");
+		}
+	}
+	
 	public static void main(String[] args) {
 		Game game = new Game(0);
 		Board board = new Board(20, 20, 6, 10, 8); // Initializing the board as a 20x20 map with 6 Weapons, 10 Food and  8 Traps
@@ -44,24 +54,24 @@ public class Game {
 		System.out.println("Let the games begin!");
 		System.out.println("May the odds be ever in your favor!");	// Message that wishes the players good luck. They are going to need it!
 		boolean endgame = false;
-		do {
+		do {			
 			System.out.println("This is round No." + String.valueOf(game.getRound()));	// Message to show the user in which round the game is
-			player1.move(player2, game.getRound());	// Moving the players across the board ROUND OF THE GAME IN MOVE
+			player1.move(player2, game.getRound());	// Moving the players across the board 
 			endgame = player1.kill(player1, player2, 2);
 			if (endgame == true) {
-				System.out.println(player1.getName() + " has won! FIRST BLOOD!");
+				game.endgameMurder(player1, player2, board);
 				break;
 			}
 			player1.statistics(game.getRound()); 
 			player2.move(player2, board);
 			endgame = player1.kill(player2, player1, 2);
 			if (endgame == true) {
-				System.out.println(player2.getName() + " has won! FIRST BLOOD!");
+				game.endgameMurder(player2, player1, board);
 				break;
 			}
 			if (game.getRound() % 3 == 0)	// Every 3 rounds the board shrinks 
 				board.resizeBoard(player1, player2);
-			String[][] arr = board.getStringRepresentation(player1, player2);	// Every round the board is being printed
+			String[][]arr = board.getStringRepresentation(player1, player2);	// Every round the board is being printed
 			for (int i = 0; i < board.getN(); i++) {
 				for (int j = 0; j < board.getM(); j++)
 					System.out.print(arr[i][j] + " ");
