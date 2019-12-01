@@ -35,35 +35,50 @@ public class Game {
 	}
 
 	public static void main(String[] args) {
-		Game game = new Game(1);
+		Game game = new Game(0);
 		Board board = new Board(20, 20, 6, 10, 8); // Initializing the board as a 20x20 map with 6 Weapons, 10 Food and  8 Traps
 		board.createBoard();
-		Player player1 = new Player(0, "mNektar", board, 0, -10, -10, null, null, null); // Initializing the 2 players
+		HeuristicPlayer player1 = new HeuristicPlayer(0, "mNektar", board, 0, -10, -10, null, null, null); // Initializing the 2 players
+		player1.setR(3);
 		Player player2 = new Player(1, "Aspirenie", board, 0, 10, 10, null, null, null);
 		System.out.println("Let the games begin!");
 		System.out.println("May the odds be ever in your favor!");	// Message that wishes the players good luck. They are going to need it!
+		boolean endgame = false;
 		do {
 			System.out.println("This is round No." + String.valueOf(game.getRound()));	// Message to show the user in which round the game is
-			player1.move(player1, board);	// Moving the players across the board
+			player1.move(player2, game.getRound());	// Moving the players across the board ROUND OF THE GAME IN MOVE
+			endgame = player1.kill(player1, player2, 2);
+			if (endgame == true) {
+				System.out.println(player1.getName() + " has won! FIRST BLOOD!");
+				break;
+			}
+			player1.statistics(game.getRound()); 
 			player2.move(player2, board);
+			endgame = player1.kill(player2, player1, 2);
+			if (endgame == true) {
+				System.out.println(player2.getName() + " has won! FIRST BLOOD!");
+				break;
+			}
 			if (game.getRound() % 3 == 0)	// Every 3 rounds the board shrinks 
 				board.resizeBoard(player1, player2);
-			String[][] arr = board.getStringRepresentation();	// Every round the board is being printed
+			String[][] arr = board.getStringRepresentation(player1, player2);	// Every round the board is being printed
 			for (int i = 0; i < board.getN(); i++) {
 				for (int j = 0; j < board.getM(); j++)
 					System.out.print(arr[i][j] + " ");
 				System.out.print("\n");
 			}
-			game.round++;
-			System.out.println(player1.getName() + " has " + player1.getScore() + " points.");	// Messages to show the user how many points each player has
+			player1.statistics(game.getRound());	// Messages to show the user how many points each player has
 			System.out.println(player2.getName() + " has " + player2.getScore() + " points. \n");
+			game.round++;
 		} while ((board.getN() > 4) && (board.getM() > 4));
 		System.out.println("Game Over!");
-		if (player1.getScore() > player2.getScore())		// Messages to show the user which player has won
-			System.out.println(player1.getName() + " has won! He has made his district proud!");
-		else if (player1.getScore() < player2.getScore())
-			System.out.println(player2.getName() + " has won! She has made her district proud!");
-		else
-			System.out.println("It's a tie! What a phenomenal game it has been!");
+		if (endgame != true) {
+			if (player1.getScore() > player2.getScore())		// Messages to show the user which player has won
+				System.out.println(player1.getName() + " has won! He has made his district proud!");
+			else if (player1.getScore() < player2.getScore())
+				System.out.println(player2.getName() + " has won! She has made her district proud!");
+			else
+				System.out.println("It's a tie! What a phenomenal game it has been!");
+		}
 	}
 }

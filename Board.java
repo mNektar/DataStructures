@@ -234,14 +234,14 @@ public class Board {
 		}
 	}	
 	
-	String[][] getStringRepresentation() { 	// FUNCTION that will create and return a 2-dimensional string array containing the board's information
+	String[][] getStringRepresentation(Player p1, Player p2) { 	// FUNCTION that will create and return a 2-dimensional string array containing the board's information
 		String[][] arr = new String[getN()][getM()];
 		for (int i = 0; i < getN(); i++)	// Setting every element of the array that is to be printed to ___ as given in the instructions of the project
 			for (int j = 0; j < getM(); j++) {
 				arr[i][j] = "___";
 			}
-		for (int i = -4; i < 0; i++)	// This loop is for the North - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point to the left (....j - 1)
-			for (int j = -4; j < 0; j++) {
+		for (int i = -10; i < 0; i++)	// This loop is for the North - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point to the left (....j - 1)
+			for (int j = -10; j < 0; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i][(getM() / 2) + j] = "W" + String.valueOf(weapons[k].getPlayerId())
@@ -252,9 +252,11 @@ public class Board {
 				for (int k = 0; k < getT(); k++)
 					if ((traps[k].getX() == i) && (traps[k].getY() == j))
 						arr[(getN() / 2) + i][(getM() / 2) + j] = "T" + String.valueOf(traps[k].getId() + " ");
+				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i][(getN() / 2) + j] = "P1 ";
+				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i][(getN() / 2) + j] = "P2 ";
 			}
-		for (int i = -4; i < 0; i++)	// This loop is for the North - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point to the left (....j - 1)
-			for (int j = 1; j < 5; j++) {
+		for (int i = -10; i < 0; i++)	// This loop is for the North - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point to the left (....j - 1)
+			for (int j = 1; j < 10; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "W" + String.valueOf(weapons[k].getPlayerId())
@@ -265,9 +267,11 @@ public class Board {
 				for (int k = 0; k < getT(); k++)
 					if ((traps[k].getX() == i) && (traps[k].getY() == j))
 						arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "T" + String.valueOf(traps[k].getId() + " ");
+				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "P1 ";
+				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "P2 ";
 			}
-		for (int i = 1; i < 5; i++)		// This loop is for the South - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards (....i - 1)
-			for (int j = -4; j < 0; j++) {
+		for (int i = 1; i < 10; i++)		// This loop is for the South - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards (....i - 1)
+			for (int j = -10; j < 0; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i - 1][(getM() / 2) + j] = "W" + String.valueOf(weapons[k].getPlayerId())
@@ -278,9 +282,11 @@ public class Board {
 				for (int k = 0; k < getT(); k++)
 					if ((traps[k].getX() == i) && (traps[k].getY() == j))
 						arr[(getN() / 2) + i - 1][(getM() / 2) + j] = "T" + String.valueOf(traps[k].getId() + " ");
+				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i - 1][(getN() / 2) + j] = "P1 ";
+				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i - 1][(getN() / 2) + j] = "P2 ";
 			}
-		for (int i = 1; i < 5; i++)		// This loop is for the South - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards and to the left (....i - 1), (....j - 1)
-			for (int j = 1; j < 5; j++) {
+		for (int i = 1; i < 10; i++)		// This loop is for the South - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards and to the left (....i - 1), (....j - 1)
+			for (int j = 1; j < 10; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i - 1][(getM() / 2) + j - 1] = "W" + String.valueOf(weapons[k].getPlayerId())
@@ -291,33 +297,9 @@ public class Board {
 				for (int k = 0; k < getT(); k++)
 					if ((traps[k].getX() == i) && (traps[k].getY() == j))
 						arr[(getN() / 2) + i - 1][(getM() / 2) + j - 1] = "T" + String.valueOf(traps[k].getId() + " ");
+				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i - 1][(getM() / 2) + j - 1] = "P1 ";
+				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i - 1][(getM() / 2) + j - 1] = "P2 ";
 			}
 		return arr;
 	}
 }
-/* DOESNT WORK WITH CONVERTERS.. douleuei alla thelei diorthoma sti logiki tou me to tipwma diagrafontai kati pagides/efodia pou de tha eprepe na diagrafontai
-int convertX (int x) {
-	if (x > 0) return (getN() / 2) + x - 1;
-	else return (getN() / 2) + x;
-}
-
-int convertY (int y) {
-	if (y > 0) return (getN() / 2) + y - 1;
-	else return (getN() / 2) + y;
-	/* inside getStringRepresentation 
-		 * *for (int i = -getN() / 2; i < getN() / 2; i++)	
-			for (int j = -getM() / 2; j < getM() / 2; j++) {
-				if (i == 0) i++;
-				if (j == 0) j++;
-				int tempX = convertX(i), tempY = convertY(j);
-				for (int k = 0; k < getW(); k++)	
-					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
-						arr[tempX][tempY] = "W" + String.valueOf(weapons[k].getPlayerId()) + String.valueOf(weapons[k].getId());
-				for (int k = 0; k < getF(); k++)
-					if ((food[k].getX() == i) && (food[k].getY() == j))
-						arr[tempX][tempY] = "F" + String.valueOf(food[k].getId() + " ");
-				for (int k = 0; k < getT(); k++)
-					if ((traps[k].getX() == i) && (traps[k].getY() == j))
-						arr[tempX][tempY] = "T" + String.valueOf(traps[k].getId() + " ");
-			}
-}*/
