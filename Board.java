@@ -256,7 +256,7 @@ public class Board {
 				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i][(getN() / 2) + j] = "P2 ";
 			}
 		for (int i = -10; i < 0; i++)	// This loop is for the North - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point to the left (....j - 1)
-			for (int j = 1; j < 10; j++) {
+			for (int j = 1; j < 11; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "W" + String.valueOf(weapons[k].getPlayerId())
@@ -270,7 +270,7 @@ public class Board {
 				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "P1 ";
 				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i][(getM() / 2) + j - 1] = "P2 ";
 			}
-		for (int i = 1; i < 10; i++)		// This loop is for the South - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards (....i - 1)
+		for (int i = 1; i < 11; i++)		// This loop is for the South - West section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards (....i - 1)
 			for (int j = -10; j < 0; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
@@ -285,8 +285,8 @@ public class Board {
 				if ((p1.getX() == i) && (p1.getY() == j)) arr[(getN() / 2) + i - 1][(getN() / 2) + j] = "P1 ";
 				if ((p2.getX() == i) && (p2.getY() == j)) arr[(getN() / 2) + i - 1][(getN() / 2) + j] = "P2 ";
 			}
-		for (int i = 1; i < 10; i++)		// This loop is for the South - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards and to the left (....i - 1), (....j - 1)
-			for (int j = 1; j < 10; j++) {
+		for (int i = 1; i < 11; i++)		// This loop is for the South - East section of the board and it assigns all the elements (Weapons, Food, Traps) one point upwards and to the left (....i - 1), (....j - 1)
+			for (int j = 1; j < 11; j++) {
 				for (int k = 0; k < getW(); k++)
 					if ((weapons[k].getX() == i) && (weapons[k].getY() == j))
 						arr[(getN() / 2) + i - 1][(getM() / 2) + j - 1] = "W" + String.valueOf(weapons[k].getPlayerId())

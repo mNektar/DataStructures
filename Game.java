@@ -34,14 +34,14 @@ public class Game {
 		this.round = rou;
 	}
 
-	public void endgameMurder(Player pKill, Player pDead, Board board) {
-		System.out.println(pKill.getName() + " has won by murdering their opponent! FIRST BLOOD!");
+	public void endgameMurder(Player pKill, Player pDead, Board board) { // FUNCTION that prints information about who won if one of the two players kills the other
 		String[][]arr = board.getStringRepresentation(pKill, pDead);	
 		for (int i = 0; i < board.getN(); i++) {
 			for (int j = 0; j < board.getM(); j++)
 				System.out.print(arr[i][j] + " ");
 			System.out.print("\n");
 		}
+		System.out.println(pKill.getName() + " has won by murdering their opponent! FATALITY!");
 	}
 	
 	public static void main(String[] args) {
@@ -57,13 +57,14 @@ public class Game {
 		do {			
 			System.out.println("This is round No." + String.valueOf(game.getRound()));	// Message to show the user in which round the game is
 			player1.move(player2, game.getRound());	// Moving the players across the board 
+			player1.statistics(game.getRound());	// Messages to show the user how many points the heuristic player has
 			endgame = player1.kill(player1, player2, 2);
 			if (endgame == true) {
 				game.endgameMurder(player1, player2, board);
 				break;
 			}
-			player1.statistics(game.getRound()); 
 			player2.move(player2, board);
+			System.out.println(player2.getName() + " has " + player2.getScore() + " points. \n"); // Messages to show the user how many points the random player has
 			endgame = player1.kill(player2, player1, 2);
 			if (endgame == true) {
 				game.endgameMurder(player2, player1, board);
@@ -77,11 +78,8 @@ public class Game {
 					System.out.print(arr[i][j] + " ");
 				System.out.print("\n");
 			}
-			player1.statistics(game.getRound());	// Messages to show the user how many points each player has
-			System.out.println(player2.getName() + " has " + player2.getScore() + " points. \n");
 			game.round++;
 		} while ((board.getN() > 4) && (board.getM() > 4));
-		System.out.println("Game Over!");
 		if (endgame != true) {
 			if (player1.getScore() > player2.getScore())		// Messages to show the user which player has won
 				System.out.println(player1.getName() + " has won! He has made his district proud!");
@@ -90,5 +88,6 @@ public class Game {
 			else
 				System.out.println("It's a tie! What a phenomenal game it has been!");
 		}
+		System.out.println("Game Over!");
 	}
 }
